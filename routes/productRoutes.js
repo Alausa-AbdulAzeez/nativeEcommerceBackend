@@ -1,14 +1,18 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 const {
   createSingleProduct,
   getProducts,
-} = require('../controllers/productControllers')
+  productsSearch,
+} = require("../controllers/productControllers");
 
 // CREATE SINGLE PRODUCT
-router.post('/create', createSingleProduct)
+router.post("/create", createSingleProduct);
 
 // GET SINGLE/MULTIPLE PRODUCT(S)
-router.get('/', getProducts)
+router.get("/", getProducts);
 
-module.exports = router
+// SEARCH FOR PRODUCT(S)
+router.get("/search", productsSearch);
+
+module.exports = router;
