@@ -107,15 +107,13 @@ const productsSearch = async (req, res) => {
 
       //   IF PRODUCTS WERE NOT FOUND
       if (!result || result.length === 0) {
-        res.status(404)
-        throw new Error('Products not found')
-      } else {
-        //   IF PRODUCTS WERE FOUND
-        res.status(200).json(result)
+        res.status(404).json({ message: 'Products not found' })
       }
+
+      //   IF PRODUCTS WERE FOUND
+      res.status(200).json(result)
     } else {
-      res.status(400)
-      throw new Error('Please pass in a value')
+      res.status(400).json({ message: 'Please pass in a value' })
     }
   } catch (error) {
     res.status(500).json(error)

@@ -5,7 +5,6 @@ const productRoutes = require('./routes/productRoutes')
 
 const app = express()
 const dotenv = require('dotenv')
-const errorHandler = require('./middleWares/errorHandler')
 app.use(cors())
 
 // CONFIGS
@@ -14,7 +13,6 @@ app.use(express.json())
 const port = 3000 || process.env.PORT
 
 // MIDDLEWARES
-app.use(errorHandler)
 app.use('/api/product/', productRoutes)
 
 // DB CONNECTION
