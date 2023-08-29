@@ -1,4 +1,5 @@
 var CryptoJS = require('crypto-js')
+var jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
 // CREATE A USER
@@ -31,7 +32,7 @@ const createUser = async (req, res) => {
   const newUser = { username, email, location, password: hashedPassword }
 
   // SAVE USER TO THE DB
-  const savedUser = await User.save(newUser)
+  const savedUser = await User.create(newUser)
 
   //   CHECK IF THE USER WAS SUCCESSFULLY CREATED
   if (!savedUser) {
@@ -41,8 +42,8 @@ const createUser = async (req, res) => {
   }
 
   //   IF USER WAS CREATED AND SAVED SUCCESSFULLY, SEND THE RESPONSE WITHOUT THE PASSWORD
-  let { password: userPassword, ...others } = newUser?._doc
-  res.status(200).json({ ...others })
+  let { password: userPassword, ...others } = savedUser?._doc
+  res.status(201).json({ ...others })
 
   try {
   } catch (error) {
