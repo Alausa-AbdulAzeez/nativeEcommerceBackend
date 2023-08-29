@@ -4,6 +4,7 @@ const { default: mongoose } = require('mongoose')
 const productRoutes = require('./routes/productRoutes')
 const authRoutes = require('./routes/authRoutes')
 const userRoutes = require('./routes/userRoutes')
+const cartRoutes = require('./routes/cartRoutes')
 
 const app = express()
 const dotenv = require('dotenv')
@@ -18,6 +19,7 @@ const port = 3000 || process.env.PORT
 app.use('/api/product/', productRoutes)
 app.use('/api/auth/', authRoutes)
 app.use('/api/user/', userRoutes)
+app.use('/api/cart/', cartRoutes)
 
 // DB CONNECTION
 mongoose
