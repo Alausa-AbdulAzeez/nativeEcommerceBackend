@@ -43,8 +43,6 @@ const addToCart = async (req, res) => {
       res.status(400).json('Please pass all required details')
     }
 
-    console.log(userId, cartItem)
-
     // FIND USER
     const user = await User.findById(userId)
 
@@ -67,7 +65,19 @@ const addToCart = async (req, res) => {
     const cart = await Cart.findOne({ userId })
 
     if (cart) {
-      res.status(200).json(cart)
+      // IF USER HAS A CART, CHECK IF THE ITEM TO BE ADDED ALREADY EXISTS IN THE CART
+      const existingProduct = cart?.products?.find(
+        (product) => product?.cartItem?.toString() === cartItem
+      )
+
+      if (existingProduct) {
+        existingProduct.quantity += quantity
+      } else {
+        cart?.products?.push({ cartItem, quantity })
+      }
+
+      await cart.save()
+      res.status(200).json({ message: 'Product added to cart', data: cart })
     } else {
       const newCart = new Cart({
         userId,
